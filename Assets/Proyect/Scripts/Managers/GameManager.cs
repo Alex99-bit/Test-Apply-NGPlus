@@ -4,6 +4,7 @@ public class GameManager : MonoBehaviour
 {
     // This script is responsible for managing the game state and flow
     public static GameManager Instance;
+    public GameState CurrentGameState;
 
     private void Awake()
     {
@@ -20,14 +21,27 @@ public class GameManager : MonoBehaviour
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-        void Start()
+    void Start()
     {
-        
+
     }
 
     // Update is called once per frame
     void Update()
     {
+
+    }
+
+    public void NewGameState()
+    {
         
     }
+}
+
+public enum GameState
+{
+    MainMenu,
+    Playing,
+    Paused,
+    GameOver
 }
