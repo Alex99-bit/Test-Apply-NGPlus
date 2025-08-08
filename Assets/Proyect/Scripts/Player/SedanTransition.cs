@@ -38,6 +38,8 @@ public class SedanTransition : MonoBehaviour
     [Tooltip("Reference to the PlayerMecha script for player controls.")]
     public PlayerMecha playerMecha;
 
+    private CharacterController playerController;
+
     private bool isInCar = false;
 
     void Start()
@@ -56,6 +58,11 @@ public class SedanTransition : MonoBehaviour
         playerCinemachine.SetActive(true);
         inputManagerArcade.enabled = false;
         arcadeVehicleController.enabled = false;
+
+        if (player != null)
+        {
+            playerController = player.GetComponent<CharacterController>();
+        }
     }
 
     void Update()
@@ -112,21 +119,30 @@ public class SedanTransition : MonoBehaviour
     void ExitCar()
     {
         cameraSedan.SetActive(false);
+        playerMecha.enabled = true;
 
-        // Show player model
         foreach (var renderer in playerMeshRenderers)
         {
             renderer.enabled = true;
+        }
+
+        if (playerController != null)
+        {
+            playerController.enabled = false;
+        }
+
+        
+        player.transform.position = exitPoint.position;
+        player.transform.rotation = exitPoint.rotation;
+
+        if (playerController != null)
+        {
+            playerController.enabled = true;
         }
 
         playerCinemachine.SetActive(true);
         inputManagerArcade.enabled = false;
         arcadeVehicleController.enabled = false;
         isInCar = false;
-        playerMecha.enabled = true; // Re-enable player controls
-
-        // Place player at exit point or beside the car
-        player.transform.position = exitPoint.position;
-        player.transform.rotation = exitPoint.rotation;
     }
 }

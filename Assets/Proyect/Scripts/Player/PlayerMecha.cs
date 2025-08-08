@@ -7,12 +7,12 @@ public class PlayerMecha : MonoBehaviour
     public float walkSpeed = 5f;
     public float runSpeed = 8f;
     public float rotationSpeed = 10f;
-    
+
     [Header("Gravity")]
     public float gravity = -9.81f;
     public float groundDistance = 0.4f;
     public LayerMask groundMask;
-    
+
     [Header("Camera Reference")]
     public Transform cameraTransform;
 
@@ -25,6 +25,8 @@ public class PlayerMecha : MonoBehaviour
     private bool isGrounded;
     private Transform groundCheck;
     private string lastState; // Guarda el último estado activado
+    private Transform playerTransform;
+    
 
     void Start()
     {
@@ -40,6 +42,7 @@ public class PlayerMecha : MonoBehaviour
         groundCheck.parent = transform;
         groundCheck.localPosition = new Vector3(0, -1, 0);
         animator = this.GetComponent<Animator>();
+        playerTransform = this.transform;
     }
 
     void Update()
@@ -113,5 +116,10 @@ public class PlayerMecha : MonoBehaviour
             animator.SetTrigger(newState);
             lastState = newState;
         }
+    }
+
+    public void SetNewTransform(Transform newTransform)
+    {
+        playerTransform.position = newTransform.position;
     }
 }
