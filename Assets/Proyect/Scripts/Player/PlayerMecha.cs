@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [RequireComponent(typeof(CharacterController))]
-public class ThirdPersonMovement : MonoBehaviour
+public class PlayerMecha : MonoBehaviour
 {
     [Header("Movement")]
     public float walkSpeed = 5f;
@@ -16,11 +16,15 @@ public class ThirdPersonMovement : MonoBehaviour
     [Header("Camera Reference")]
     public Transform cameraTransform;
 
+    [Header("Animation")]
+    public Animator animator; // Asigna tu Animator en el inspector
+
     private CharacterController controller;
     private float currentSpeed;
     private Vector3 velocity;
     private bool isGrounded;
     private Transform groundCheck;
+    private string lastState; // Guarda el último estado activado
 
     void Start()
     {
@@ -31,7 +35,7 @@ public class ThirdPersonMovement : MonoBehaviour
         }
         currentSpeed = walkSpeed;
 
-        // Create ground check object
+        // Crear punto de GroundCheck
         groundCheck = new GameObject("GroundCheck").transform;
         groundCheck.parent = transform;
         groundCheck.localPosition = new Vector3(0, -1, 0);
@@ -49,20 +53,20 @@ public class ThirdPersonMovement : MonoBehaviour
             velocity.y = -2f;
         }
 
-        // Get input axes
+        // Input
         float horizontalInput = Input.GetAxis("Horizontal");
         float verticalInput = Input.GetAxis("Vertical");
 
-        // Check if running (Shift pressed)
+        // Shift = correr
         bool isRunning = Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
         currentSpeed = isRunning && verticalInput > 0 ? runSpeed : walkSpeed;
 
-        // Create direction vector based on input
+        // Dirección
         Vector3 inputDirection = new Vector3(horizontalInput, 0f, verticalInput).normalized;
 
+        // Movimiento
         if (inputDirection.magnitude >= 0.1f)
         {
-            // Get camera forward and right directions and remove vertical component
             Vector3 camForward = cameraTransform.forward;
             Vector3 camRight = cameraTransform.right;
             camForward.y = 0f;
@@ -70,20 +74,43 @@ public class ThirdPersonMovement : MonoBehaviour
             camForward.Normalize();
             camRight.Normalize();
 
-            // Combine directions based on input
             Vector3 moveDirection = (camForward * verticalInput + camRight * horizontalInput).normalized;
             Vector3 movement = moveDirection * currentSpeed;
-
-            // Move the character
             controller.Move(movement * Time.deltaTime);
 
-            // Smoothly rotate the character towards movement direction
+            // Rotación suave
             Quaternion targetRotation = Quaternion.LookRotation(moveDirection);
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
         }
 
-        // Apply gravity
+        // Animaciones
+        HandleAnimation(inputDirection.magnitude, isRunning);
+
+        // Gravedad
         velocity.y += gravity * Time.deltaTime;
         controller.Move(velocity * Time.deltaTime);
+    }
+
+    private void HandleAnimation(float movementMagnitude, bool isRunning)
+    {
+        string newState;
+
+        if (movementMagnitude < 0.1f)
+            newState = "Idle";
+        else if (isRunning)
+            newState = "Run";
+        else
+            newState = "Walk";
+
+        if (newState != lastState)
+        {
+            // Resetea triggers antes de activar el nuevo
+            animator.ResetTrigger("Idle");
+            animator.ResetTrigger("Walk");
+            animator.ResetTrigger("Run");
+
+            animator.SetTrigger(newState);
+            lastState = newState;
+        }
     }
 }
