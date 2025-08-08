@@ -15,6 +15,11 @@ public class NPCSpawnManager : MonoBehaviour
     private int currentNPCCount = 0;
     private bool isSpawning = false;
 
+    private void Awake()
+    {
+        DontDestroyOnLoad(gameObject); // Keep this instance across scenes
+    }
+
     void Start()
     {
         if (startSpawningOnStart)

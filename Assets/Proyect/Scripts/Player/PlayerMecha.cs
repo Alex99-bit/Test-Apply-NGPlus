@@ -39,6 +39,7 @@ public class PlayerMecha : MonoBehaviour
         groundCheck = new GameObject("GroundCheck").transform;
         groundCheck.parent = transform;
         groundCheck.localPosition = new Vector3(0, -1, 0);
+        animator = this.GetComponent<Animator>();
     }
 
     void Update()
