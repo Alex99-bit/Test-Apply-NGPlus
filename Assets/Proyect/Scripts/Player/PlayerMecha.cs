@@ -39,6 +39,9 @@ public class ThirdPersonMovement : MonoBehaviour
 
     void Update()
     {
+        if (!controller.enabled || !gameObject.activeInHierarchy)
+            return;
+
         // Ground check
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
         if (isGrounded && velocity.y < 0)

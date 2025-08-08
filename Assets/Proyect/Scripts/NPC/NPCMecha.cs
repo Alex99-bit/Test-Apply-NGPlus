@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -21,6 +22,7 @@ public class NPCPedestrian : MonoBehaviour
     private NPCState currentState;
     private Vector3 startPosition;
     private Vector3 targetPosition;
+    public Animator animator;
     private float waitTimer;
 
     void Start()
@@ -30,6 +32,7 @@ public class NPCPedestrian : MonoBehaviour
         startPosition = transform.position;
         currentState = NPCState.Walking;
         agent.speed = walkSpeed;
+        animator = this.GetComponent<Animator>();
         SetNewDestination();
     }
 
@@ -61,6 +64,16 @@ public class NPCPedestrian : MonoBehaviour
                 Quaternion targetRotation = Quaternion.LookRotation(lookDirection);
                 transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 8f);
             }
+        }
+
+        // Update animator parameters
+        if (currentState == NPCState.Waiting)
+        {
+            animator.SetBool("isWalking", false);
+        }
+        else
+        {
+            animator.SetBool("isWalking", true);
         }
     }
 
