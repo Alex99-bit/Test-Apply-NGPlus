@@ -15644,9 +15644,10 @@ GameObject:
   - component: {fileID: 4007240279039622652}
   - component: {fileID: 4007240279039622655}
   - component: {fileID: 4007240279039622654}
+  - component: {fileID: 8266731821467793218}
   m_Layer: 7
   m_Name: Sedan car kartlike
-  m_TagString: Untagged
+  m_TagString: Sedan
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -15724,8 +15725,8 @@ MonoBehaviour:
   drivableSurface:
     serializedVersion: 2
     m_Bits: 64
-  MaxSpeed: 150
-  accelaration: 18
+  MaxSpeed: 45
+  accelaration: 5
   turn: 4
   gravity: 7
   downforce: 5
@@ -15811,7 +15812,7 @@ MonoBehaviour:
   carVelocity: {x: 0, y: 0, z: 0}
   BodyTilt: 10
   engineSound: {fileID: 4007240279039622655}
-  minPitch: 0.3
+  minPitch: 0.641
   MaxPitch: 3
   SkidSound: {fileID: 4007240279039622654}
   skidWidth: 0.13985014
@@ -15856,7 +15857,7 @@ AudioSource:
   m_Resource: {fileID: 8300000, guid: 0b2844ba13c61eb459484abc96bde242, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
-  m_Pitch: 1
+  m_Pitch: 1.63
   Loop: 1
   Mute: 0
   Spatialize: 0
@@ -15952,7 +15953,7 @@ AudioSource:
   m_audioClip: {fileID: 8300000, guid: a0212963d11a06c4caa454df8e2a2a57, type: 3}
   m_Resource: {fileID: 8300000, guid: a0212963d11a06c4caa454df8e2a2a57, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.5
+  m_Volume: 0.782
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -16036,6 +16037,21 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &8266731821467793218
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4007240279039622625}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b81484e8d5c0f74e97584eda8dfa633, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cameraSedan: {fileID: 0}
+  cameraPlayer: {fileID: 0}
+  player: {fileID: 0}
 --- !u!1 &4007240279085191151
 GameObject:
   m_ObjectHideFlags: 0
