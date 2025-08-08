@@ -60,7 +60,7 @@ public class PlayerMecha : MonoBehaviour
 
         // Shift = correr
         bool isRunning = Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
-        currentSpeed = isRunning && verticalInput > 0 ? runSpeed : walkSpeed;
+        currentSpeed = isRunning ? runSpeed : walkSpeed;
 
         // Dirección
         Vector3 inputDirection = new Vector3(horizontalInput, 0f, verticalInput).normalized;
