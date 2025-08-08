@@ -69,11 +69,11 @@ public class NPCPedestrian : MonoBehaviour
         // Update animator parameters
         if (currentState == NPCState.Waiting)
         {
-            animator.SetBool("isWalking", false);
+            animator.SetBool("Walking", false);
         }
         else
         {
-            animator.SetBool("isWalking", true);
+            animator.SetBool("Walking", true);
         }
     }
 
