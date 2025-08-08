@@ -50,6 +50,18 @@ public class NPCPedestrian : MonoBehaviour
 
         if (shouldAvoidPlayer)
             CheckPlayerProximity();
+
+        // Fix rotation: Only rotate if agent is moving
+        if (agent.velocity.sqrMagnitude > 0.1f)
+        {
+            Vector3 lookDirection = agent.velocity.normalized;
+            lookDirection.y = 0f;
+            if (lookDirection != Vector3.zero)
+            {
+                Quaternion targetRotation = Quaternion.LookRotation(lookDirection);
+                transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 8f);
+            }
+        }
     }
 
     private void UpdateWalkingState()
