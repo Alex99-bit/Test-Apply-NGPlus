@@ -1,10 +1,12 @@
+#if UNITY_EDITOR
 using UnityEditor;
-
+#endif
+using UnityEngine;
 using GDS.Core.Events;
 
 namespace GDS.Core.Editor {
-
-    [InitializeOnLoadAttribute]
+#if UNITY_EDITOR
+    //[InitializeOnLoad]
     public static class PlayModeStateChanged {
 
         static PlayModeStateChanged() {
@@ -15,7 +17,7 @@ namespace GDS.Core.Editor {
             if (state == PlayModeStateChange.ExitingPlayMode) {
                 EventBus.Global.Publish(new Reset());
             }
-
         }
     }
+#endif
 }
